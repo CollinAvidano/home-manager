@@ -10,12 +10,11 @@
     baseIndex = 1;
     escapeTime = 0;
     plugins = with pkgs; [
-      tmuxPlugins.tpm
       tmuxPlugins.better-mouse-mode
-      tmuxPlugins.tmux-yank
-      tmuxPlugins.tmux-resurrect
-      tmuxPlugins.tmux-continuum
-      # tmuxPlugins.arcticicestudio/nord-tmux
+      tmuxPlugins.yank
+      tmuxPlugins.resurrect
+      tmuxPlugins.continuum
+      tmuxPlugins.nord
     ];
     extraConfig = ''
       set -g default-terminal "screen-256color"
@@ -93,5 +92,6 @@
 
       # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
       run '~/.tmux/plugins/tpm/tpm'
-    ''
+    '';
+  };
 }

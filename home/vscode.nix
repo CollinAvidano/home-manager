@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
 {
+
   # TODO MAYBE JUST MAKE THE MUTABLE DIR THING AND CONFIGURE THIS WITH SETTINGS SYNC IT WOULD BE EASIER
   programs.vscode = {
     enable = true;

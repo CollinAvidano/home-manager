@@ -1,13 +1,15 @@
 #https://github.com/CollinAvidano/dotfiles/blob/master/git/.gitconfig
-{ pkgs, config, flake, ... }:
+{ pkgs, config, ... }:
 {
   home.packages = [ pkgs.git-lfs ];
 
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
-    userName = flake.config.people.users.${config.home.username}.name;
-    userEmail = flake.config.people.users.${config.home.username}.email;
+    # userName = config.people.users.${config.home.username}.name;
+    # userEmail = config.people.users.${config.home.username}.email;
+    userName = "CollinAvidano";
+    userEmail = "collin.avidano@gmail.com";
     aliases = {
       mainlog = "log --all --decorate --oneline --graph";
       subup = "submodule update --init --recursive";
