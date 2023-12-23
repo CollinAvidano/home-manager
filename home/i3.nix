@@ -4,7 +4,8 @@ let
   mod = "Mod4";
 in {
   # TODO FIX THIS
-  # services.xserver.windowManager.i3.package = pkgs.i3-gaps;
+  # services.xserver.windowManager.i3.package = pkgs.i3;
+  # i3 includes gaps past 4.22
   xsession.windowManager.i3 = {
     enable = true;
     extraPackages = with pkgs; [

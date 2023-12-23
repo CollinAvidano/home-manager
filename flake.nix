@@ -8,6 +8,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
@@ -43,5 +49,15 @@
         ];
       };
     };
+
+    systemConfigs.default = system-manager.lib.makeSystemConfig {
+      modules = [
+        ./home.nix
+        ./home/i3.nix
+        "${nixos-hardware}/lenovo/thinkpad/t14" # uses default module
+      ];
+      extraArgs = inputs;
+    };
+
   };
 }
