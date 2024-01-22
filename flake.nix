@@ -3,11 +3,17 @@
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
@@ -42,6 +48,14 @@
           }
         ];
       };
+    };
+    systemConfigs.default = system-manager.lib.makeSystemConfig {
+      modules = [
+        ./home.nix
+        ./home/i3.nix
+        "${nixos-hardware}/lenovo/thinkpad/t14" # uses default module
+      ];
+      extraArgs = inputs;
     };
   };
 }

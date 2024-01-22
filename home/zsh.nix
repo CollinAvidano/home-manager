@@ -8,7 +8,7 @@
     enableAutosuggestions = true;
     enableVteIntegration = true;
     autocd = true;
-    defaultKeymap = "vi";
+    defaultKeymap = "vicmd";
     oh-my-zsh = {
       enable = true;
       #TODO ZOXIDE

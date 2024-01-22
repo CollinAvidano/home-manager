@@ -3,7 +3,9 @@
 let
   mod = "Mod4";
 in {
-  services.xserver.windowManager.i3.package = pkgs.i3-gaps;
+  # TODO FIX THIS
+  # services.xserver.windowManager.i3.package = pkgs.i3;
+  # i3 includes gaps past 4.22
   xsession.windowManager.i3 = {
     enable = true;
     extraPackages = with pkgs; [
@@ -35,7 +37,7 @@ in {
         "XF86WLANoff" = "exec --no-startup-id ifconfig wlp2s0 down toggle";
         "XF86WLANon" = "exec --no-startup-id ifconfig wlp2s0 up toggle";
 
-        "XF86Display" = "exec $scripts/toggleredshift.sh";
+        # "XF86Display" = "exec $scripts/toggleredshift.sh";
         "XF86Display" = "exec $scripts/monitor-switch.sh";
 
         "XF86Tools" = "exec --no-startup-id $scripts/toggletouchpad.sh";
@@ -150,31 +152,31 @@ in {
 
 
 
-# TODO STARTUP IN EXTRA CONFIG
-# start locking script
-exec --no-startup-id xss-lock -- $scripts/lock.sh
+# # TODO STARTUP IN EXTRA CONFIG
+# # start locking script
+# exec --no-startup-id xss-lock -- $scripts/lock.sh
 
-# start compton compositor
-exec compton --config ~/.config/compton.conf -b -c
+# # start compton compositor
+# exec compton --config ~/.config/compton.conf -b -c
 
-# Wallpaper
-exec --no-startup-id /usr/bin/feh --bg-scale /home/collin/pictures/wallpaper.png &
+# # Wallpaper
+# exec --no-startup-id /usr/bin/feh --bg-scale /home/collin/pictures/wallpaper.png &
 
-# Screenshots
-bindsym Print exec gnome-screenshot -ia &
-bindsym Control+Print exec gnome-screenshot -id &
+# # Screenshots
+# bindsym Print exec gnome-screenshot -ia &
+# bindsym Control+Print exec gnome-screenshot -id &
 
-# Network manager applet
-exec --no-startup-id nm-applet &
+# # Network manager applet
+# exec --no-startup-id nm-applet &
 
-# Battery alert script
-exec --no-startup-id $scripts/i3-battery-popup.sh &
+# # Battery alert script
+# exec --no-startup-id $scripts/i3-battery-popup.sh &
 
-# Disk automount wrapper for Udisks2
-exec --no-startup-id udiskie --tray --use-udisks2 &
+# # Disk automount wrapper for Udisks2
+# exec --no-startup-id udiskie --tray --use-udisks2 &
 
-# Bluetooth applet
-# exec --no-startup-id blueman-applet
+# # Bluetooth applet
+# # exec --no-startup-id blueman-applet
 
     };
   };
