@@ -21,38 +21,52 @@
     home.username = "collin";
     home.homeDirectory = "/home/collin";
 
+    git = {
+      enable = true;
+      userName = "CollinAvidano";
+      userEmail = "collin.avidano@gmail.com";
+    };
+    bash.enable = true;
+    zsh.enable = true;
+    tmux.enable = true;
+
     # You should not change this value, even if you update Home Manager. If you do
     # want to update the value, then make sure to first check the Home Manager
     # release notes.
     home.stateVersion = "23.11"; # Please read the comment before changing.
 
-        # Packages I need installed on every system
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
+    # Packages I need installed on every system
     home.packages = with pkgs; [
-      # _1password
+      coreutils
+      file
       aerc
-      ansible
-      # htop-vim
       # nvtop
       nvtop-amd
       glances
+      htop
       bind
       bitwarden-cli
-      coreutils
-      wireshark
       stress-ng
       # gpu-burn
       linuxPackages_latest.perf
       fio # flexible io tester
-      netperf
       curl
       wget
+      wireshark
+      tcpdump
+      netperf
       iproute2 # large set of common commands
+      inetutils # ping and other network ones actuall not included in the ip route 2
+      nmap
+      openssl
       avahi # mdns and daemon
-      # toybox # large set of common commands
       deploy-rs
-      docker-compose
       dos2unix
-      file
       findutils
       fluxcd
       fzf
@@ -62,25 +76,18 @@
       gitleaks
       gnupg
       gnumake
-      htop
-      inetutils # ping and other network ones actuall not included in the ip route 2
       jq
       kind
       k9s
       kubectl
       kubernetes-helm
+      docker-compose
       libarchive
       libvirt
-      mosh
-      nixos-rebuild
-      nixos-shell
-      nmap
-      openssl
       pandoc
       pciutils
       python3
       screen
-      tcpdump
       tmux
       tor
       torsocks
@@ -88,6 +95,8 @@
       unzip
       zip
       ranger
+      nixos-rebuild
+      nixos-shell
       nix-melt
       deer
 
@@ -108,7 +117,6 @@
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
     home.file = {
-
       # # Building this configuration will create a copy of 'dotfiles/screenrc' in
       # # the Nix store. Activating the configuration will then make '~/.screenrc' a
       # # symlink to the Nix store copy.
@@ -120,7 +128,6 @@
       #   org.gradle.daemon.idletimeout=3600000
       # '';
 
-
       # Webcord Nord theme
       ".config/WebCord/Themes/nordic.theme.css" = {
         source = builtins.fetchurl {
@@ -128,7 +135,6 @@
           sha256 = "sha256:13q4ijdpzxc4r9423s51hhcc8wzw3901cafqpnyqxn69vr2xnzrc";
         };
       };
-
     };
 
     # You can also manage environment variables but you will have to manually source
@@ -137,6 +143,7 @@
     #  /etc/profiles/per-user/collin/etc/profile.d/hm-session-vars.sh
     # if you don't want to manage your shell through Home Manager.
     home.sessionVariables = {
+      # TODO SET THIS FROM YOUR .env file
       # EDITOR = "emacs";
     };
 

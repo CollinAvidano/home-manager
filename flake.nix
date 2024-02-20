@@ -14,28 +14,37 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
 
     stdlib-pretty-printers = {
-      url = "https://gcc.gnu.org/git/gcc.git";
-      sparseCheckout = ["libstdc++-v3/python/"];
+      flake = false;
+      url = "https://gcc.gnu.org/git/gcc.git?dir=libstdc++-v3/python/";
+      # sparseCheckout = [ "libstdc++-v3/python" ];
+      # sparseCheckout = "libstdc++-v3/python/";
+      # subtree = "libstdc++-v3/python/";
     };
     # includes other printers (lldb and msvc) as well
     eigen-pretty-printers = {
+      flake = false;
       url = "https://gitlab.com/libeigen/eigen.git";
-      sparseCheckout = ["debug/"];
+      # url = "https://gitlab.com/libeigen/eigen.git?dir=debug/";
+      # gitlab does not seem to support dir for this
+      # sparseCheckout = [ "debug" ];
+      # sparseCheckout = "debug/";
+      # subtree = "debug/";
     };
     boost-pretty-printers = {
+      flake = false;
       url = https://github.com/ruediger/Boost-Pretty-Printer.git;
     };
-
-
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs = {
     nixpkgs,
     home-manager,
     nixos-hardware,
+    system-manager,
     ...
   }@inputs:
     let

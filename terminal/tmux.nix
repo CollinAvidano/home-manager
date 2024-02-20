@@ -1,17 +1,22 @@
 #https://github.com/CollinAvidano/dotfiles/blob/master/tmux/.tmux.conf
 { config, pkgs, lib, ... }:
-{
+let
+  cfg = config.tmux;
+in {
+  options.tmux.enable = lib.mkEnable "tmux";
 
-  shell.aliases = mkIf config.tmux.enable {
-  ns="tmux new -s "
-  as="tmux attach-session -t "
+  shell.aliases = lib.mkIf cfg.enable {
+    ns = "tmux new -s ";
+    as = "tmux attach-session -t ";
+  };
+  # TODO need a make if here to include zsh if this is active
 
-  programs.tmux = {
+  programs.tmux = lib.mkIf cfg.enable {
     enable = true;
     keyMode = "vi";
     mouse = true;
     prefix = "C-a";
-    shell = "\${pkgs.zsh}/bin/zsh";
+    shell = "${pkgs.zsh}/bin/zsh";
     baseIndex = 1;
     escapeTime = 0;
     plugins = with pkgs; [

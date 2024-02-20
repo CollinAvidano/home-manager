@@ -1,42 +1,4 @@
 {pkgs, inputs, ...}: let
-  stdlib-pretty-printers = pkgs.stdenvNoCC.mkDerivation {
-    name = "stdlib-pretty-printers";
-    version = "13.2";
-    src = "${inputs.stdlib-pretty-printers}/libstdc++-v3/python";
-    dontConfigure = true;
-    dontBuild = true;
-    dontPatch = true;
-    installPhase = ''
-      runHook preInstall
-      cp -r $src/python/libstdcxx $out/libstdcxx
-      runHook postInstall
-    '';
-  };
-
-  eigen-pretty-printers = pkgs.stdenvNoCC.mkDerivation {
-    name = "eigen-pretty-printers";
-    src = "${inputs.eigen-pretty-printers}/debug";
-    dontConfigure = true;
-    dontBuild = true;
-    dontPatch = true;
-    installPhase = ''
-      cp -r $src/debug/gdb $out/eigen
-    '';
-  };
-
-  boost-pretty-printers = pkgs.stdenvNoCC.mkDerivation {
-    name = "boost-pretty-printers";
-    src = "${inputs.boost-pretty-printers}/libstdc++-v3/python";
-    dontConfigure = true;
-    dontBuild = true;
-    dontPatch = true;
-    installPhase = ''
-      runHook preInstall
-      cp -r $src/boost $out/boost
-      runHook postInstall
-    '';
-  };
-
   merged-pretty-printers = pkgs.stdenvNoCC.mkDerivation {
     name = "merged-pretty-printers";
     srcs = [
@@ -57,6 +19,8 @@
     '';
   };
 in {
+
+  # TODO boost version as an option? Like that being version dependent is the one reason I dont like the above being together
   home.file.".gdbinit".text = ''
     set history save on
     set history size unlimited
@@ -68,10 +32,7 @@ in {
     set non-stop on
     python
     import sys
-    # sys.path.append('${merged-pretty-printers}')
-    sys.path.append('${stdlib-pretty-printers}')
-    sys.path.append('${eigen-pretty-printers}')
-    sys.path.append('${boost-pretty-printers}')
+    sys.path.append('${merged-pretty-printers}')
     from libstdcxx.v6.printers import register_libstdcxx_printers
     register_libstdcxx_printers (None)
     from eigen.printers import register_eigen_printers

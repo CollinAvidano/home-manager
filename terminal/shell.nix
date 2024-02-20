@@ -6,6 +6,7 @@
 with lib;
 with builtins;
 
+#TODO mkEnable shell really should just be the or condition only in this file of bash or zsh and control wether to install shell only related programs
 {
   options = {
     shell = {
@@ -102,7 +103,8 @@ with builtins;
 
     home.packages = mkIf config.zsh.enable [
       pkgs.zsh-powerlevel10k
-    ]
+    ];
+    programs.zoxide.enable = config.zsh.enable;
 
 
     programs.thefuck.enable = true;
@@ -112,8 +114,8 @@ with builtins;
     # TODO merge these in on a make if? how do I deal with the enable then....
     programs.nix-index.enableZshIntegration = true;
     programs.thefuck.enableZshIntegration = true;
-    programs.zellij.enableZshIntegration
-    programs.zoxide.enableZshIntegration
+    programs.zellij.enableZshIntegration = true;
+    programs.zoxide.enableZshIntegration = true;
 
   };
 }
