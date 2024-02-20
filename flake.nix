@@ -14,6 +14,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+
+    stdlib-pretty-printers = {
+      url = "https://gcc.gnu.org/git/gcc.git";
+      sparseCheckout = ["libstdc++-v3/python/"];
+    };
+    # includes other printers (lldb and msvc) as well
+    eigen-pretty-printers = {
+      url = "https://gitlab.com/libeigen/eigen.git";
+      sparseCheckout = ["debug/"];
+    };
+    boost-pretty-printers = {
+      url = https://github.com/ruediger/Boost-Pretty-Printer.git;
+    };
+
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 

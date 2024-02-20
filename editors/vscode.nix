@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
 
   # TODO MAYBE JUST MAKE THE MUTABLE DIR THING AND CONFIGURE THIS WITH SETTINGS SYNC IT WOULD BE EASIER

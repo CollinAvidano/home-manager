@@ -1,5 +1,5 @@
 # https://github.com/CollinAvidano/dotfiles/blob/master/i3/.config/i3/config
-{ config, lib, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   mod = "Mod4";
 in {

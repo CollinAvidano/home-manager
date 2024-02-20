@@ -1,6 +1,11 @@
 #https://github.com/CollinAvidano/dotfiles/blob/master/tmux/.tmux.conf
-{ config, lib, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
+
+  shell.aliases = mkIf config.tmux.enable {
+  ns="tmux new -s "
+  as="tmux attach-session -t "
+
   programs.tmux = {
     enable = true;
     keyMode = "vi";

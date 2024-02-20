@@ -1,13 +1,15 @@
 { config, pkgs, inputs , ... }:
 {
   imports = [
-    ./home/bash.nix
-    ./home/git.nix
-    # ./home/i3.nix
-    ./home/tmux.nix
-    # ./home/vscode.nix
-    ./home/zsh.nix
-    ./home/touchegg.nix
+    ./editors/vim.nix
+    ./editors/vscode.nix
+    ./system/i3.nix
+    ./system/touchegg.nix
+    ./terminal/shell.nix
+    ./terminal/tmux.nix
+    ./tools/docker.nix
+    ./tools/gdb.nix
+    ./tools/git.nix
   ];
 
   config = {
