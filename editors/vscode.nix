@@ -98,7 +98,6 @@
       "editor.suggestSelection": "first",
       "editor.minimap.enabled": false,
       "editor.fontFamily": "SauceCodePro Nerd Font Mono, SauceCodePro NF",
-      // "editor.fontFamily": "Consolas, 'Courier New', monospace",
       "editor.fontLigatures": false,
       "editor.insertSpaces": true,
       "editor.detectIndentation": false,
@@ -148,7 +147,6 @@
                   "editor.action.outdentLines"
               ]
           },
-
       ],
       "vim.visualModeKeyBindingsNonRecursive": [
           {
@@ -169,10 +167,6 @@
           "devbox": "linux",
           "simbox": "linux"
       },
-      // "cmake.generator": "Ninja",
-      // "cmake.preferredGenerators": [
-      //     "Ninja",
-      // ],
       "[cpp]": {
           "editor.defaultFormatter": "ms-vscode.cpptools"
       },
@@ -231,8 +225,6 @@
           "vimrc",
           "xml"
       ],
-      // "clangd.detectExtensionConflicts": false,
-      // "C_Cpp.intelliSenseEngine": "disabled",
     } '';
 
     # TODO just move these back to their own file

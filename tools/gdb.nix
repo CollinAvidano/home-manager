@@ -1,6 +1,7 @@
 {pkgs, inputs, ...}: let
   merged-pretty-printers = pkgs.stdenvNoCC.mkDerivation {
     name = "merged-pretty-printers";
+    buildInputs = [pkgs.tree];
     srcs = [
       "${inputs.stdlib-pretty-printers}/libstdc++-v3/python"
       "${inputs.eigen-pretty-printers}/debug"
@@ -12,9 +13,10 @@
     dontPatch = true;
     installPhase = ''
       runHook preInstall
-      cp -r $src/python/libstdcxx $out/libstdcxx
-      cp -r $src/debug/gdb $out/eigen
-      cp -r $src/boost $out/boost
+      mkdir -p $out
+      cp -r $sourceRoot/python/libstdcxx $out/libstdcxx
+      cp -r $sourceRoot/debug/gdb $out/eigen
+      cp -r $sourceRoot/source/boost $out/boost
       runHook postInstall
     '';
   };

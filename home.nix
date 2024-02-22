@@ -1,13 +1,12 @@
 { config, pkgs, inputs , ... }:
 {
   imports = [
-    ./editors/vim.nix
-    ./editors/vscode.nix
-    ./system/i3.nix
+    # ./editors/vim.nix
+    # ./editors/vscode.nix
     ./system/touchegg.nix
     ./terminal/shell.nix
     ./terminal/tmux.nix
-    ./tools/docker.nix
+    # ./tools/docker.nix
     ./tools/gdb.nix
     ./tools/git.nix
   ];
@@ -30,62 +29,76 @@
     zsh.enable = true;
     tmux.enable = true;
 
-    # You should not change this value, even if you update Home Manager. If you do
-    # want to update the value, then make sure to first check the Home Manager
-    # release notes.
-    home.stateVersion = "23.11"; # Please read the comment before changing.
-
     programs.direnv = {
       enable = true;
       nix-direnv.enable = true;
     };
 
+    # You should not change this value, even if you update Home Manager. If you do
+    # want to update the value, then make sure to first check the Home Manager
+    # release notes.
+    home.stateVersion = "23.11"; # Please read the comment before changing.
+
+    # keyboard config
+    home.keyboard = [ "caps:swapescape" "altwin:swap_alt_win" ];
+
     # Packages I need installed on every system
     home.packages = with pkgs; [
       coreutils
       file
-      aerc
+
       # nvtop
       nvtop-amd
       glances
       htop
-      bind
-      bitwarden-cli
+
       stress-ng
       # gpu-burn
       linuxPackages_latest.perf
       fio # flexible io tester
+
       curl
       wget
       wireshark
       tcpdump
-      netperf
+      netperf # preferable to iperf3
       iproute2 # large set of common commands
       inetutils # ping and other network ones actuall not included in the ip route 2
       nmap
       openssl
       avahi # mdns and daemon
-      deploy-rs
-      dos2unix
-      findutils
-      fluxcd
-      fzf
+      dropwatch # packet drop monitoring and filtering debugging
+
+      findutils # locate and other utils
+
+
       gcc
+      cmake
       git-lfs
       github-cli
-      gitleaks
-      gnupg
       gnumake
+
+      # codeql #unfree package
+      gitleaks
+
+      gnupg
       jq
       kind
+
       k9s
       kubectl
       kubernetes-helm
       docker-compose
       libarchive
       libvirt
+
       pandoc
+
+      ethtool
       pciutils
+      lshw
+      lm_sensors
+
       python3
       screen
       tmux
@@ -95,10 +108,15 @@
       unzip
       zip
       ranger
+      deer # ranger alternative
+      picocom
+
       nixos-rebuild
       nixos-shell
       nix-melt
-      deer
+
+      # spotify # for personal machines
+      # spotify-tui
 
       # # It is sometimes useful to fine-tune packages, for example, by applying
       # # overrides. You can do that directly here, just don't forget the

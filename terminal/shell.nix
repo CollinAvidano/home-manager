@@ -6,12 +6,12 @@
 with lib;
 with builtins;
 
-#TODO mkEnable shell really should just be the or condition only in this file of bash or zsh and control wether to install shell only related programs
+#TODO mkEnableOption shell really should just be the or condition only in this file of bash or zsh and control wether to install shell only related programs
 {
   options = {
     shell = {
       # unsure if enable is needed really just using this attrs set as a way to set common config all shells source from to get program specific aliases
-      enable = mkEnable "shell";
+      enable = mkEnableOption "shell";
 
       aliases = mkOption {
         type = types.attrsOf types.str;
@@ -24,8 +24,8 @@ with builtins;
       };
     };
 
-    bash.enable = mkEnable "bash";
-    zsh.enable = mkEnable "zsh";
+    bash.enable = lib.mkEnableOption "bash";
+    zsh.enable = mkEnableOption "zsh";
   };
 
   config = {
@@ -61,7 +61,7 @@ with builtins;
         # Extended globbing.
         "extglob"
 
-      ]
+      ];
     };
 
     programs.zsh = mkIf config.zsh.enable  {
@@ -101,17 +101,20 @@ with builtins;
       '';
     };
 
-    home.packages = mkIf config.zsh.enable [
+    # tied to any shell usage
+    home.packages = mkIf config.shell.enable [
+      zoxide
+      fzf
+    ] //
+    mkIf config.zsh.enable [
       pkgs.zsh-powerlevel10k
     ];
-    programs.zoxide.enable = config.zsh.enable;
-
 
     programs.thefuck.enable = true;
 
     programs.thefuck.enableBashIntegration = true;
 
-    # TODO merge these in on a make if? how do I deal with the enable then....
+    # TODO merge these in on a make if? is there a nicer way to deal with enabling them than having each one have a mkif
     programs.nix-index.enableZshIntegration = true;
     programs.thefuck.enableZshIntegration = true;
     programs.zellij.enableZshIntegration = true;

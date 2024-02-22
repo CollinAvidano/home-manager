@@ -9,34 +9,26 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    system-manager = {
-      url = "github:numtide/system-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # system-manager = {
+    #   url = "github:numtide/system-manager";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
 
     stdlib-pretty-printers = {
       flake = false;
-      url = "https://gcc.gnu.org/git/gcc.git?dir=libstdc++-v3/python/";
-      # sparseCheckout = [ "libstdc++-v3/python" ];
-      # sparseCheckout = "libstdc++-v3/python/";
-      # subtree = "libstdc++-v3/python/";
+      url = "git+https://gcc.gnu.org/git/gcc.git";
     };
     # includes other printers (lldb and msvc) as well
     eigen-pretty-printers = {
       flake = false;
-      url = "https://gitlab.com/libeigen/eigen.git";
-      # url = "https://gitlab.com/libeigen/eigen.git?dir=debug/";
-      # gitlab does not seem to support dir for this
-      # sparseCheckout = [ "debug" ];
-      # sparseCheckout = "debug/";
-      # subtree = "debug/";
+      url = "git+https://gitlab.com/libeigen/eigen.git";
     };
     boost-pretty-printers = {
       flake = false;
-      url = https://github.com/ruediger/Boost-Pretty-Printer.git;
+      url = "github:ruediger/Boost-Pretty-Printer";
     };
   };
 
@@ -44,7 +36,7 @@
     nixpkgs,
     home-manager,
     nixos-hardware,
-    system-manager,
+    # system-manager,
     ...
   }@inputs:
     let
@@ -55,15 +47,14 @@
     homeConfigurations."collin" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [ ./home.nix ];
-      extraSpecialArgs = inputs;
+      extraSpecialArgs = { inherit inputs; };
     };
 
     nixosConfigurations = {
       aegis = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = inputs;
+        specialArgs = { inherit inputs; };
         modules = [
-          "${nixpkgs}/modules/installer/cd-dvd/installation-cd-minimal.nix"
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -72,14 +63,6 @@
           }
         ];
       };
-    };
-    systemConfigs.default = system-manager.lib.makeSystemConfig {
-      modules = [
-        ./home.nix
-        ./home/i3.nix
-        "${nixos-hardware}/lenovo/thinkpad/t14" # uses default module
-      ];
-      extraArgs = inputs;
     };
   };
 }

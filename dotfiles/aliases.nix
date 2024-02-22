@@ -29,8 +29,12 @@
   scp = "scp -r";
 
   # grep aliases
-  hgrep = "egrep --color=always -e '^' -e ";
-  cgrep = "egrep --color=always -e '^' -e ";
+  hgrep = "\egrep --color=always -e '^' -e ";
+  cgrep = "\egrep --color=always -e '^' -e ";
+
+  grep = "grep --color=auto";
+  fgrep = "fgrep --color=auto";
+  egrep = "egrep --color=auto";
 
   # Refresh shell
   rfssh = "source ~/.\"$SHELL_EXTENSION\"rc";
