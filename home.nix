@@ -62,7 +62,7 @@
     tmux.enable = true;
 
     vim.enable = true;
-    vscode.enable = true;
+    # vscode.enable = true;
 
     # Packages I need installed on every system
     home.packages = with pkgs; [
@@ -128,7 +128,6 @@
 
       tree
       ranger
-      neotree
       deer # ranger alternative
 
       unzip

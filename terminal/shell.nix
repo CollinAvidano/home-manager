@@ -24,7 +24,7 @@ with builtins;
       };
     };
 
-    bash.enable = lib.mkEnableOption "bash";
+    bash.enable = mkEnableOption "bash";
     zsh.enable = mkEnableOption "zsh";
   };
 
@@ -50,7 +50,7 @@ with builtins;
       enable = true;
       enableCompletion = !pkgs.stdenv.isDarwin;
       shellAliases = config.shell.aliases;
-
+      bashrcExtra = config.shell.functions;
       shellOptions = [
         # Append to history file rather than replacing it.
         "histappend"
@@ -73,7 +73,6 @@ with builtins;
       dotDir = ".config/zsh";
       autocd = true;
       defaultKeymap = "vicmd";
-      shellAliases = config.shell.aliases;
       oh-my-zsh = {
         enable = true;
         # TODO have the respective packages merge these into plugins if they are enabled
@@ -83,15 +82,17 @@ with builtins;
           "docker"
           "pip"
           "vi-mode"
-          "zsh-autosuggestions"
-          "zsh-nvm"
+          # "zsh-autosuggestions"
+          # "zsh-nvm"
           "wd"
         ];
         theme = "powerlevel10k/powerlevel10k";
       };
+      shellAliases = config.shell.aliases;
       initExtra = ''
         ${builtins.readFile ../dotfiles/zshrc}
         ${builtins.readFile ../dotfiles/p10k}
+        ${config.shell.functions}
       '';
 
       # TODO I dont think I need this anymore use home.sessionVrs if so delete this and .env
@@ -128,7 +129,7 @@ with builtins;
       enableZshIntegration = config.zsh.enable;
     };
 
-    programs.zoxide.enable = {
+    programs.zoxide = {
       enable = config.shell.enable;
       enableBashIntegration = config.bash.enable;
       enableZshIntegration = config.zsh.enable;

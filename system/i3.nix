@@ -16,12 +16,13 @@ in {
 
   config.home.packages = mkIf cfg.enable (with pkgs; [
     feh
-    compton
+    # compton
     xss-lock
-    blueman-applet
-    Udisks2
-    nm-applet
-    gnome-screenshot
+    # blueman
+    udisks2
+    # nm-applet # will have to test for this one
+    gnome.gnome-screenshot
+    # gnome.gnome-keyring
     dmenu
     i3status
     i3lock
@@ -135,8 +136,8 @@ in {
 
       # Start i3bar to display a workspace bar (plus the system information i3status
       # finds out, if available)
-      bars = [{
-        "status_command" = "i3status";
+      # bars = [{
+      #   status_command = "i3status";
 
         #TODO IMPLEMENT THIS FILE
         # https://github.com/CollinAvidano/dotfiles/blob/master/i3/.config/i3status/config
@@ -155,7 +156,7 @@ in {
         #   inactive_workspace $nord8  $nord3
         #   urgent_workspace   $nord3 $nord15
         #}
-      }];
+      # }];
 
 
       # TODO CONVERT TO i3status-rust
