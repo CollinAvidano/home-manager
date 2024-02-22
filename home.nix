@@ -1,7 +1,7 @@
 { config, pkgs, inputs , ... }:
 {
   imports = [
-    # ./editors/vim.nix
+    ./editors/vim.nix
     # ./editors/vscode.nix
     ./system/touchegg.nix
     ./terminal/shell.nix

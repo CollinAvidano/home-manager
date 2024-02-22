@@ -20,9 +20,9 @@ in {
     sv="sudo vim";
   };
 
-  config.programs.vim = mkIf {
+  config.programs.vim = mkIf cfg.enable {
     enable = true;
-    vim.plugins = [
+    plugins = with pkgs.vimPlugins; [
       vim-plug
       zoxide-vim
       vimux
