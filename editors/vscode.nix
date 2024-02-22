@@ -3,6 +3,7 @@
 with lib;
 with builtins;
 
+
 let
   cfg = config.vscode;
 in {
@@ -15,9 +16,12 @@ in {
   # TODO MAYBE JUST MAKE THE MUTABLE DIR THING AND CONFIGURE THIS WITH SETTINGS SYNC IT WOULD BE EASIER
   config.programs.vscode = mkIf cfg.enable {
     enable = true;
+    # TODO honestly should get rid of this file and just use sync....... the only benefit right now is installing it for me
+    # the strict json is going to drive me nuts though
+    mutableExtensionsDir = true;
     extensions = with pkgs.vscode-extensions; [
       dracula-theme.theme-dracula
-      1nVitr0.blocksort
+      "1nVitr0.blocksort"
       alefragnani.Bookmarks
       arcticicestudio.nord-visual-studio-code
       bbenoist.Nix
@@ -101,7 +105,7 @@ in {
       "nix.enableLanguageServer": true,
       "nix.serverPath": "rnix-lsp",
       "[*.nix]": {
-          "editor.tabSize": 2
+        "editor.tabSize": 2
       },
       "indentRainbow.ignoreErrorLanguages": ["*.nix"],
       "fold.level": 2,
@@ -119,10 +123,10 @@ in {
       "editor.largeFileOptimizations": false,
       "files.trimTrailingWhitespace": true,
       "files.exclude": {
-          "**/.classpath": true,
-          "**/.project": true,
-          "**/.settings": true,
-          "**/.factorypath": true
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
       },
       "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
       "cmake.configureOnOpen": false,
@@ -132,57 +136,54 @@ in {
       "jupyter.textOutputLimit": 200000,
       "python.languageServer": "Pylance",
       "workbench.editorAssociations": {
-          "*.ipynb": "jupyter-notebook",
-          "git-rebase-todo": "gitlens.rebase"
+        "*.ipynb": "jupyter-notebook",
+        "git-rebase-todo": "gitlens.rebase"
       },
       "notebook.cellToolbarLocation": {
-          "default": "right",
-          "jupyter-notebook": "left"
+        "default": "right",
+        "jupyter-notebook": "left"
       },
       "keyboard.dispatch": "keyCode",
       "vim.useSystemClipboard": true,
       "vim.visualModeKeyBindings": [
-          {
-              "before": [
-                  ">"
-              ],
-              "commands": [
-                  "editor.action.indentLines"
-              ]
-          },
-          {
-              "before": [
-                  "<"
-              ],
-              "commands": [
-                  "editor.action.outdentLines"
-              ]
-          },
+        {
+          "before": [
+            ">"
+          ],
+          "commands": [
+            "editor.action.indentLines"
+          ]
+        },
+        {
+          "before": [
+            "<"
+          ],
+          "commands": [
+            "editor.action.outdentLines"
+          ]
+        }
       ],
       "vim.visualModeKeyBindingsNonRecursive": [
-          {
-              "before": [
-                  "p",
-              ],
-              "after": [
-                  "p",
-                  "g",
-                  "v",
-                  "y"
-              ]
-          }
+        {
+          "before": [
+            "p"
+          ],
+          "after": [
+            "p",
+            "g",
+            "v",
+            "y"
+          ]
+        }
       ],
       "vim.foldfix": true,
       "files.autoSave": "onWindowChange",
       "remote.SSH.remotePlatform": {
-          "devbox": "linux",
-          "simbox": "linux"
+        "devbox": "linux",
+        "simbox": "linux"
       },
       "[cpp]": {
-          "editor.defaultFormatter": "ms-vscode.cpptools"
-      },
-      "cmake.configureSettings": {
-
+        "editor.defaultFormatter": "ms-vscode.cpptools"
       },
       "gitlens.remotes": [{ "domain": "ghe.anduril.dev", "type": "GitHub" }],
       "terminal.integrated.fontSize": 14,
@@ -197,18 +198,18 @@ in {
       "hexeditor.defaultEndianness": "little",
       "hexeditor.inspectorType": "aside",
       "[typescriptreact]": {
-          "editor.defaultFormatter": "vscode.typescript-language-features"
+        "editor.defaultFormatter": "vscode.typescript-language-features"
       },
       "notebook.lineNumbers": "on",
       "editor.multiCursorLimit": 50000,
       "workbench.tree.indent": 20,
       "workbench.colorCustomizations": {
-          "tree.indentGuidesStroke": "#ff0000"
+        "tree.indentGuidesStroke": "#ff0000"
       },
       "cmake.configureOnEdit": false,
       "git.autofetch": true,
       "[python]": {
-          "editor.formatOnType": true
+        "editor.formatOnType": true
       },
       "ros.distro": "humble",
       "rust-analyzer.cargo.target": "thumbv7em-none-eabihf",
@@ -235,7 +236,7 @@ in {
         "toml",
         "vimrc",
         "xml"
-      ],
+      ]
     } '';
 
     # TODO just move these back to their own file

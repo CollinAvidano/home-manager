@@ -16,6 +16,7 @@ in {
       keyMode = "vi";
       mouse = true;
       prefix = "C-a";
+      # TODO make this a precedence thing
       shell = "${pkgs.zsh}/bin/zsh";
       baseIndex = 1;
       escapeTime = 0;

@@ -64,5 +64,15 @@
         ];
       };
     };
+
+    # systemConfigs.default = system-manager.lib.makeSystemConfig {
+    #   modules = [
+    #     ./home.nix
+    #     ./home/i3.nix
+    #     "${nixos-hardware}/lenovo/thinkpad/t14" # uses default module
+    #   ];
+    #   extraArgs = inputs;
+    # };
+
   };
 }

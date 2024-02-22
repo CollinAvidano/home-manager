@@ -2,9 +2,12 @@
 {
   imports = [
     ./editors/vim.nix
-    ./editors/vscode.nix
+    # ./editors/vscode.nix
     ./system/touchegg.nix
+    ./system/i3.nix
     ./terminal/shell.nix
+    ./terminal/zellij.nix
+    # TODO redshift, compton, and arandr
     ./terminal/tmux.nix
     # ./tools/docker.nix
     ./tools/gdb.nix
@@ -20,20 +23,6 @@
     home.username = "collin";
     home.homeDirectory = "/home/collin";
 
-    git = {
-      enable = true;
-      userName = "CollinAvidano";
-      userEmail = "collin.avidano@gmail.com";
-    };
-    bash.enable = true;
-    zsh.enable = true;
-    tmux.enable = true;
-
-    programs.direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
-
     # You should not change this value, even if you update Home Manager. If you do
     # want to update the value, then make sure to first check the Home Manager
     # release notes.
@@ -41,6 +30,39 @@
 
     # keyboard config
     home.keyboard = [ "caps:swapescape" "altwin:swap_alt_win" ];
+
+
+
+
+    git = {
+      enable = true;
+      userName = "CollinAvidano";
+      userEmail = "collin.avidano@gmail.com";
+    };
+
+    i3.enable = true;
+    xsession.windowManager.i3.config.terminal = "gnome-terminal";
+
+    # TODO move this
+    programs.gnome-terminal = {
+      enable = true;
+    };
+
+
+    # packages that were small enough I just enabled them here
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
+    shell.enable = true;
+    bash.enable = true;
+    zsh.enable = true;
+    zellij.enable = true;
+    tmux.enable = true;
+
+    vim.enable = true;
+    vscode.enable = true;
 
     # Packages I need installed on every system
     home.packages = with pkgs; [
@@ -71,7 +93,6 @@
 
       findutils # locate and other utils
 
-
       gcc
       cmake
       git-lfs
@@ -101,14 +122,18 @@
 
       python3
       screen
-      tmux
+      # tmux enabled by module
       tor
       torsocks
+
       tree
+      ranger
+      neotree
+      deer # ranger alternative
+
       unzip
       zip
-      ranger
-      deer # ranger alternative
+
       picocom
 
       nixos-rebuild
@@ -161,8 +186,9 @@
     #  /etc/profiles/per-user/collin/etc/profile.d/hm-session-vars.sh
     # if you don't want to manage your shell through Home Manager.
     home.sessionVariables = {
-      # TODO SET THIS FROM YOUR .env file
-      # EDITOR = "emacs";
+      # TODO define this as an order var of enabled options
+      EDITOR = "vim";
+      ALTERNATE_EDITOR = "";
     };
 
   };

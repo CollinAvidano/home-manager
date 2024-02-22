@@ -22,6 +22,7 @@
   };
 in {
 
+  # TODO HOW TO MAKE THIS INTO AN OPTION?
   # TODO boost version as an option? Like that being version dependent is the one reason I dont like the above being together
   home.file.".gdbinit".text = ''
     set history save on

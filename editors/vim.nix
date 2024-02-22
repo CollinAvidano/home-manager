@@ -27,7 +27,7 @@ in {
       zoxide-vim
       vimux
       vim-which-key
-      youcompleteme
+      YouCompleteMe
       vim-nix
       vim-yaml
       rust-vim

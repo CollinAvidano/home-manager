@@ -1,25 +1,42 @@
 # https://github.com/CollinAvidano/dotfiles/blob/master/i3/.config/i3/config
 { config, pkgs, lib, ... }:
+
+with lib;
+with builtins;
+
 let
+  cfg = config.i3;
   mod = "Mod4";
 in {
+  options.i3.enable = mkEnableOption "i3";
+
+  # have to be at environment level for i3 to use them
+  # config.environment.systemPackages = mkIf cfg.enable [
+  # ];
+
+  config.home.packages = mkIf cfg.enable (with pkgs; [
+    feh
+    compton
+    xss-lock
+    blueman-applet
+    Udisks2
+    nm-applet
+    gnome-screenshot
+    dmenu
+    i3status
+    i3lock
+    i3blocks
+  ]);
+
   # TODO FIX THIS
   # services.xserver.windowManager.i3.package = pkgs.i3;
   # i3 includes gaps past 4.22
-  xsession.windowManager.i3 = {
+  config.xsession.windowManager.i3 = mkIf cfg.enable {
     enable = true;
-    extraPackages = with pkgs; [
-      dmenu
-      i3status
-      i3lock
-      i3blocks
-    ];
-
     config = {
+      # terminal = config.terminal;
       modifier = mod;
-
       fonts = ["font pango:Sauce Code Pro Medium Nerd Font Complete, FontAwesome, 9"];
-
       keybindings = lib.mkOptionDefault {
         # TODO FIX THIS DMENU ALIAS HACK
         "${mod}+d" = "exec dmenu_run_aliases";
@@ -118,66 +135,65 @@ in {
 
       # Start i3bar to display a workspace bar (plus the system information i3status
       # finds out, if available)
-      bars = [
-        {
-          "status_command" = "i3status";
+      bars = [{
+        "status_command" = "i3status";
 
-          #TODO IMPLEMENT THIS FILE
-          # https://github.com/CollinAvidano/dotfiles/blob/master/i3/.config/i3status/config
+        #TODO IMPLEMENT THIS FILE
+        # https://github.com/CollinAvidano/dotfiles/blob/master/i3/.config/i3status/config
 
-          #TODO THESE
-          # tray_output primary
+        #TODO THESE
+        # tray_output primary
 
-          # height 31
+        # height 31
 
-          # colors {
-          #   background $nord0
-          #   statusline $nord8
+        # colors {
+        #   background $nord0
+        #   statusline $nord8
 
-          #   focused_workspace  $nord3  $nord8
-          #   active_workspace   $nord3  $nord8
-          #   inactive_workspace $nord8  $nord3
-          #   urgent_workspace   $nord3 $nord15
-        }
-      ];
+        #   focused_workspace  $nord3  $nord8
+        #   active_workspace   $nord3  $nord8
+        #   inactive_workspace $nord8  $nord3
+        #   urgent_workspace   $nord3 $nord15
+        #}
+      }];
 
 
+      # TODO CONVERT TO i3status-rust
+      # example rust status
       # bars = [
       #   {
       #     position = "bottom";
       #     statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${./i3status-rust.toml}";
       #   }
       # ];
+    }; # END CONFIG
 
+    extraConfig = ''
+      # Screenshots
+      bindsym Print exec gnome-screenshot -ia &
+      bindsym Control+Print exec gnome-screenshot -id &
 
+      # STARTUP
+      # start locking script
+      exec --no-startup-id xss-lock -- $scripts/lock.sh
 
+      # start compton compositor
+      exec compton --config ~/.config/compton.conf -b -c
 
-# # TODO STARTUP IN EXTRA CONFIG
-# # start locking script
-# exec --no-startup-id xss-lock -- $scripts/lock.sh
+      # Wallpaper
+      exec --no-startup-id /usr/bin/feh --bg-scale /home/collin/pictures/wallpaper.png &
 
-# # start compton compositor
-# exec compton --config ~/.config/compton.conf -b -c
+      # Network manager applet
+      exec --no-startup-id nm-applet &
 
-# # Wallpaper
-# exec --no-startup-id /usr/bin/feh --bg-scale /home/collin/pictures/wallpaper.png &
+      # Battery alert script
+      exec --no-startup-id $scripts/i3-battery-popup.sh &
 
-# # Screenshots
-# bindsym Print exec gnome-screenshot -ia &
-# bindsym Control+Print exec gnome-screenshot -id &
+      # Disk automount wrapper for Udisks2
+      exec --no-startup-id udiskie --tray --use-udisks2 &
 
-# # Network manager applet
-# exec --no-startup-id nm-applet &
-
-# # Battery alert script
-# exec --no-startup-id $scripts/i3-battery-popup.sh &
-
-# # Disk automount wrapper for Udisks2
-# exec --no-startup-id udiskie --tray --use-udisks2 &
-
-# # Bluetooth applet
-# # exec --no-startup-id blueman-applet
-
-    };
+      # Bluetooth applet
+      # exec --no-startup-id blueman-applet
+    '';
   };
 }
