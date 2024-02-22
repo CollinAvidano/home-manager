@@ -44,9 +44,11 @@
     xsession.windowManager.i3.config.terminal = "gnome-terminal";
 
     # TODO move this
-    programs.gnome-terminal = {
-      enable = true;
-    };
+    # out of bounds zero error it seems like there is a required option im not setting here
+    # programs.gnome-terminal = {
+    #   enable = true;
+    #   themeVariant = "dark";
+    # };
 
 
     # packages that were small enough I just enabled them here
@@ -66,8 +68,15 @@
 
     # Packages I need installed on every system
     home.packages = with pkgs; [
+      gnome.gnome-terminal
+
       coreutils
       file
+      curl
+      wget
+      awk
+      jq
+      kind
 
       # nvtop
       nvtop-amd
@@ -79,8 +88,7 @@
       linuxPackages_latest.perf
       fio # flexible io tester
 
-      curl
-      wget
+
       wireshark
       tcpdump
       netperf # preferable to iperf3
@@ -103,8 +111,6 @@
       gitleaks
 
       gnupg
-      jq
-      kind
 
       k9s
       kubectl

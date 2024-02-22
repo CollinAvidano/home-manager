@@ -14,10 +14,12 @@ in {
   # config.environment.systemPackages = mkIf cfg.enable [
   # ];
 
+  #TODO convert utility scripts into derivation and directly reference path
   config.home.packages = mkIf cfg.enable (with pkgs; [
     feh
     # compton
     xss-lock
+    # xbacklight
     # blueman
     udisks2
     # nm-applet # will have to test for this one
@@ -27,6 +29,7 @@ in {
     i3status
     i3lock
     i3blocks
+    # notifier which im pretty sure is dunst
   ]);
 
   # TODO FIX THIS
@@ -170,10 +173,6 @@ in {
     }; # END CONFIG
 
     extraConfig = ''
-      # Screenshots
-      bindsym Print exec gnome-screenshot -ia &
-      bindsym Control+Print exec gnome-screenshot -id &
-
       # STARTUP
       # start locking script
       exec --no-startup-id xss-lock -- $scripts/lock.sh
