@@ -2,7 +2,7 @@
 {
   imports = [
     ./editors/vim.nix
-    # ./editors/vscode.nix
+    ./editors/vscode.nix
     ./system/touchegg.nix
     ./terminal/shell.nix
     ./terminal/tmux.nix

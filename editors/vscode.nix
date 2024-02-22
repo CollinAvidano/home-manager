@@ -1,8 +1,19 @@
 { config, pkgs, lib, ... }:
-{
+
+with lib;
+with builtins;
+
+let
+  cfg = config.vscode;
+in {
+  options = {
+    vscode = {
+      enable = mkEnableOption "vscode";
+    };
+  };
 
   # TODO MAYBE JUST MAKE THE MUTABLE DIR THING AND CONFIGURE THIS WITH SETTINGS SYNC IT WOULD BE EASIER
-  programs.vscode = {
+  config.programs.vscode = mkIf cfg.enable {
     enable = true;
     extensions = with pkgs.vscode-extensions; [
       dracula-theme.theme-dracula
@@ -207,23 +218,23 @@
       "redhat.telemetry.enabled": false,
       "diffEditor.ignoreTrimWhitespace": false,
       "cSpell.enableFiletypes": [
-          "ansible",
-          "bat",
-          "bibtex",
-          "cmake",
-          "cuda-cpp",
-          "dockercompose",
-          "dockerfile",
-          "makefile",
-          "nix",
-          "pip-requirements",
-          "powershell",
-          "proto3",
-          "shellscript",
-          "tex",
-          "toml",
-          "vimrc",
-          "xml"
+        "ansible",
+        "bat",
+        "bibtex",
+        "cmake",
+        "cuda-cpp",
+        "dockercompose",
+        "dockerfile",
+        "makefile",
+        "nix",
+        "pip-requirements",
+        "powershell",
+        "proto3",
+        "shellscript",
+        "tex",
+        "toml",
+        "vimrc",
+        "xml"
       ],
     } '';
 
