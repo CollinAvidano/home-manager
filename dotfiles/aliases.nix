@@ -3,7 +3,7 @@
   sudo = "$'sudo -E '";
 
   # Other sudo aliases
-  s = "$'sudo -E'";
+  s = "sudo";
   se = "sudoedit";
   please = "sudo";
 

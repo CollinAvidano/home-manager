@@ -17,15 +17,13 @@ unsetopt histverify
 # User configuration
 setopt extended_glob
 
-eval "$(zoxide init zsh)"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Colorizer aliases using grc
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 
-# break this out
+# TODO break this out
 if [ -f $HOME/.ros_setup ]; then
     . $HOME/.ros_setup
 fi

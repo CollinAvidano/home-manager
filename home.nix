@@ -17,6 +17,7 @@
   config = {
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
+    nixpkgs.config.allowUnfree = true;
 
     # Home Manager needs a bit of information about you and the paths it should
     # manage.
@@ -107,7 +108,7 @@
       github-cli
       gnumake
 
-      # codeql #unfree package
+      codeql #unfree package
       gitleaks
 
       gnupg
@@ -148,10 +149,6 @@
       # spotify # for personal machines
       # spotify-tui
 
-      # # It is sometimes useful to fine-tune packages, for example, by applying
-      # # overrides. You can do that directly here, just don't forget the
-      # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-      # # fonts?
       (pkgs.nerdfonts.override { fonts = [ "SourceCodePro" ]; })
 
       # # You can also create simple shell scripts directly inside your
@@ -162,19 +159,14 @@
       # '')
     ];
 
-    # Home Manager is pretty good at managing dotfiles. The primary way to manage
-    # plain files is through 'home.file'.
     home.file = {
-      # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-      # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-      # # symlink to the Nix store copy.
-      # ".screenrc".source = dotfiles/screenrc;
-
-      # # You can also set the file content immediately.
-      # ".gradle/gradle.properties".text = ''
-      #   org.gradle.console=verbose
-      #   org.gradle.daemon.idletimeout=3600000
-      # '';
+      ".config/user-dirs.dirs".source = "../dotfiles/user-dirs.dirs";
+      ".config/mimeapps.list".source = "../dotfiles/mimeapps.list";
+      ".config/mimeapps.list".source = "../dotfiles/mimeapps.list";
+      "./" = {
+        source = "../dotfiles/style-configs";
+        recursive = true;
+      };
 
       # Webcord Nord theme
       ".config/WebCord/Themes/nordic.theme.css" = {
@@ -194,6 +186,11 @@
       # TODO define this as an order var of enabled options
       EDITOR = "vim";
       ALTERNATE_EDITOR = "";
+      TERM="screen-256color";
+      # TODO MOVE TO RANGER
+      RANGER_LOAD_DEFAULT_RC="FALSE";
+      MOZ_USE_XINPUT2="1";
+      QT_QPA_PLATFORMTHEME="gtk3";
     };
 
   };
