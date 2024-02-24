@@ -75,7 +75,7 @@
       file
       curl
       wget
-      awk
+      gawk
       jq
       kind
 
@@ -127,7 +127,6 @@
       lshw
       lm_sensors
 
-      python3
       screen
       # tmux enabled by module
       tor
@@ -160,13 +159,11 @@
     ];
 
     home.file = {
-      ".config/user-dirs.dirs".source = "../dotfiles/user-dirs.dirs";
-      ".config/mimeapps.list".source = "../dotfiles/mimeapps.list";
-      ".config/mimeapps.list".source = "../dotfiles/mimeapps.list";
-      "./" = {
-        source = "../dotfiles/style-configs";
-        recursive = true;
-      };
+      #".config/user-dirs.dirs".source = "dotfiles/user-dirs.dirs";
+      #".config/mimeapps.list".source = "dotfiles/mimeapps.list";
+      #".clang-format".source = "dotfiles/style-configs/.clang-format";
+      #".editorconfig".source = "dotfiles/style-configs/.editorconfig";
+      #".style.yapf".source = "dotfiles/style-configs/.style.yapf";
 
       # Webcord Nord theme
       ".config/WebCord/Themes/nordic.theme.css" = {
