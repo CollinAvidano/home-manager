@@ -1,13 +1,13 @@
 { config, pkgs, inputs , ... }:
 {
   imports = [
+    # TODO redshift, compton, and arandr
     ./editors/vim.nix
     # ./editors/vscode.nix
     ./system/touchegg.nix
     ./system/i3.nix
     ./terminal/shell.nix
     ./terminal/zellij.nix
-    # TODO redshift, compton, and arandr
     ./terminal/tmux.nix
     # ./tools/docker.nix
     ./tools/gdb.nix
@@ -34,7 +34,6 @@
 
 
 
-
     git = {
       enable = true;
       userName = "CollinAvidano";
@@ -44,13 +43,15 @@
     i3.enable = true;
     xsession.windowManager.i3.config.terminal = "gnome-terminal";
 
+    networking.networkmanager.enable = true;
+
+
     # TODO move this
     # out of bounds zero error it seems like there is a required option im not setting here
     # programs.gnome-terminal = {
     #   enable = true;
     #   themeVariant = "dark";
     # };
-
 
     # packages that were small enough I just enabled them here
     programs.direnv = {
@@ -69,8 +70,6 @@
 
     # Packages I need installed on every system
     home.packages = with pkgs; [
-      gnome.gnome-terminal
-
       coreutils
       file
       curl
@@ -89,7 +88,7 @@
       linuxPackages_latest.perf
       fio # flexible io tester
 
-
+      # network utils
       wireshark
       tcpdump
       netperf # preferable to iperf3
@@ -141,12 +140,9 @@
 
       picocom
 
-      nixos-rebuild
-      nixos-shell
-      nix-melt
-
-      # spotify # for personal machines
-      # spotify-tui
+      # nixos-rebuild
+      # nixos-shell
+      # nix-melt
 
       (pkgs.nerdfonts.override { fonts = [ "SourceCodePro" ]; })
 
@@ -159,11 +155,11 @@
     ];
 
     home.file = {
-      #".config/user-dirs.dirs".source = "dotfiles/user-dirs.dirs";
-      #".config/mimeapps.list".source = "dotfiles/mimeapps.list";
-      #".clang-format".source = "dotfiles/style-configs/.clang-format";
-      #".editorconfig".source = "dotfiles/style-configs/.editorconfig";
-      #".style.yapf".source = "dotfiles/style-configs/.style.yapf";
+      ".config/user-dirs.dirs".source = "modules/dotfiles/user-dirs.dirs";
+      ".config/mimeapps.list".source = "modules/dotfiles/mimeapps.list";
+      ".clang-format".source = "modules/dotfiles/style-configs/.clang-format";
+      ".editorconfig".source = "modules/dotfiles/style-configs/.editorconfig";
+      ".style.yapf".source = "modules/dotfiles/style-configs/.style.yapf";
 
       # Webcord Nord theme
       ".config/WebCord/Themes/nordic.theme.css" = {

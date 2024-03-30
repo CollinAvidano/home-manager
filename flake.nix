@@ -9,13 +9,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # system-manager = {
-    #   url = "github:numtide/system-manager";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
 
+    nixseperatedebuginfod.url = "github:symphorien/nixseparatedebuginfod";
 
     stdlib-pretty-printers = {
       flake = false;
@@ -36,7 +37,7 @@
     nixpkgs,
     home-manager,
     nixos-hardware,
-    # system-manager,
+    system-manager,
     ...
   }@inputs:
     let
@@ -44,9 +45,14 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
   {
+
+    # config if you directly import
     homeConfigurations."collin" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      modules = [ ./home.nix ];
+      modules = [
+        (./home.nix)
+        ({ ... } : { targets.genericLinux.enable = true; })
+      ];
       extraSpecialArgs = { inherit inputs; };
     };
 
@@ -55,24 +61,26 @@
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [
-          home-manager.nixosModules.home-manager
-          {
+          (home-manager.nixosModules.home-manager {
+            # double check if you should use these 2
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users."collin" = import ./home.nix;
-          }
+          })
+          ({ ... } : { targets.genericLinux.enable = true; })
+
         ];
       };
     };
 
-    # systemConfigs.default = system-manager.lib.makeSystemConfig {
-    #   modules = [
-    #     ./home.nix
-    #     ./home/i3.nix
-    #     "${nixos-hardware}/lenovo/thinkpad/t14" # uses default module
-    #   ];
-    #   extraArgs = inputs;
-    # };
+    systemConfigs.default = system-manager.lib.makeSystemConfig {
+      modules = [
+        ./home.nix
+        ./modules/system/i3.nix
+        # "${nixos-hardware}/lenovo/thinkpad/t14" # uses default module
+      ];
+      extraArgs = inputs;
+    };
 
   };
 }
